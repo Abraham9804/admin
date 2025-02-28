@@ -16,9 +16,9 @@ function handleSubmit(e){
     }else if(password !== confirmPassword){
         showAlert("Error","Las contraseñas deben ser iguales", "error")
         return
-    } else if(!emailRegex.test(email)){
-        showAlert("Error","El correo no tiene un formato valido", "error")
-    }else if(password.length < 6){
+    }else if(!emailRegex.test(email)){
+        showAlert("Error",`${email} is not a valid email address`, "error")
+    } else if(password.length < 6){
         showAlert("Error","La contraseña debe tener al menos 6 caracteres", "error")
     }else {
         sendForm(name, lastName, email, password)
@@ -40,14 +40,28 @@ async function sendForm(name, lastName, email, password){
             throw new Error("Error sending data")
         }
         const response = await fetchForm.json()
+        console.log(response)
         if(response.success){
-            showAlert("success",response.message, "success")
+            //showAlert("Success",response.message, "success")
+            Swal.fire({
+                title: "Success",
+                text: response.message,
+                icon: "success",
+                confirmButtonColor: "#3085d6",
+                confirmButtonText: "Confirm"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                  window.location.href = "login.php"
+                } else {
+                  window.location.reload
+                }
+            });
         }else{
-            showAlert("Error","Ocurrio un error en el registro", "error")
+            showAlert("Error",response.message, "error")
         }
     }
     catch(err){
-        showAlert("Error",err.message, "error")
+        showAlert("Error",err.message, "warning")
     }
     
 }
@@ -60,6 +74,6 @@ function showAlert(title,text, icon){
         text: text,
         icon: icon,
         confirmButtonColor: "#3085d6",
-        confirmButtonText: "Comfirm"
+        confirmButtonText: "Confirm"
       });
 }
