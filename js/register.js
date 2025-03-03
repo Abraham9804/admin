@@ -42,7 +42,6 @@ async function sendForm(name, lastName, email, password){
         const response = await fetchForm.json()
         console.log(response)
         if(response.success){
-            //showAlert("Success",response.message, "success")
             Swal.fire({
                 title: "Success",
                 text: response.message,

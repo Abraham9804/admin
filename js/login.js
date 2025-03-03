@@ -16,8 +16,6 @@ function handleSubmit(e){
         return
     }
     sendForm(email, password)
-    
-
 }
 
 async function sendForm(email, password){

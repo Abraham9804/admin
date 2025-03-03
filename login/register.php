@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 require('../db/connection.php');
 
-if($_POST){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $name = $_POST['name'];
     $lastName = $_POST['lastName'];
     $email = $_POST['email'];
